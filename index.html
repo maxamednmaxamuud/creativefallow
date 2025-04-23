@@ -1,0 +1,782 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Popup Gallery</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    .header {
+  height: auto;
+  width: 100%;
+  background: #FED800;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  padding: 10px;
+}
+
+.header .logo {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 10px;
+}
+
+.header .logo img {
+  width: 120px;
+  height: auto;
+}
+
+.header .info {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.header .info button {
+  background: #183619;
+  color: #FED800;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+}
+.header .info button a{
+  color: #FED800;
+  text-decoration: none;
+} 
+
+.header .info button:hover {
+  background: #00B729;
+  color: #183619;
+}
+
+/* Responsive styles */
+@media (min-width: 768px) {
+  .header {
+    flex-wrap: nowrap;
+    padding: 0 20px;
+  }
+
+  .header .logo {
+    width: 20%;
+    justify-content: flex-start;
+    margin-bottom: 0;
+  }
+
+  .header .info {
+    width: 80%;
+    justify-content: flex-end;
+  }
+
+  .header .info button {
+    width: auto;
+  }
+}
+
+    body {
+      font-family: sans-serif;
+      overflow-y: hidden;
+    }
+
+    .container {
+      background: #183619;
+      min-height: 200vh;
+      padding: 20px;
+    }
+
+
+    .body {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      height: 90vh;
+      width: 100%;
+      overflow-y: scroll;
+    }
+
+    .box {
+      height: 250px;
+      width: 200px;
+      box-shadow: 0 0 5px 1px #00B729;
+      display: flex;
+      flex-direction: column;
+      background: #fff;
+      cursor: pointer;
+      position: relative;
+      top: 10px;
+    }
+
+    .box .img {
+      height: 85%;
+      width: 100%;
+      overflow: hidden;
+    }
+
+    .box .img img {
+      height: 100%;
+      width: 100%;
+      object-fit: cover;
+    }
+
+    .box .infoI {
+      height: 15%;
+      width: 100%;
+      background: #FED800;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      
+    }
+
+    .box .infoI p {
+      font-size: 16px;
+      color: #183619;
+    }
+
+    /* POPUP STYLES */
+    .popup {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 100vh;
+      width: 100%;
+      background: rgba(0, 0, 0, 0.8);
+      justify-content: center;
+      align-items: center;
+      z-index: 999;
+    }
+
+    .popup-content {
+      background: white;
+      padding: 20px;
+      width: 60%;
+      border-radius: 10px;
+      position: relative;
+    }
+
+    .close {
+      position: absolute;
+      top: 10px;
+      right: 15px;
+      font-size: 25px;
+      cursor: pointer;
+    }
+
+    .slider {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+      height: 300px;
+    }
+
+    .slide {
+      display: none;
+      height: 100%;
+      width: auto;
+    }
+
+    .slide.active {
+      display: block;
+    }
+
+    .controls {
+      margin-top: 10px;
+      text-align: center;
+    }
+
+    .controls button {
+      padding: 10px 20px;
+      background: #183619;
+      color: #FED800;
+      border: none;
+      margin: 0 5px;
+      cursor: pointer;
+    }
+
+    .controls button:hover {
+      background: #00B729;
+      color: white;
+    }
+
+
+    .container .abou_us{
+            height: 40%;
+            width: 100%;
+            background: #FED800;
+            box-shadow: 0 0 10px 2px #00B729;
+        }
+        .container .abou_us .abou_usT{
+            height: 110%;
+            width: 100%;
+            text-align: center;
+            font-size: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        .container .abou_us .abou_usT p{
+            color: #183619;
+        }
+        .container .abou_us .abou_usT hr{
+            width: 100px;
+            height: 1px;
+            border:3px solid #183619;
+        }
+        .container .abou_us .abou_usI{
+            height: 80%;
+            width: 100%;
+    
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+        }
+        .container .abou_us .abou_usI .userimg{
+            height: 70%;
+            width: 23%;
+           
+            border-radius: 100%;
+            position: relative;
+            top: 20px;
+        }
+        .container .abou_us .abou_usI .userimg img{
+            height: 100%;
+            width: 100%;
+            border-radius: 100%;
+        }
+        .container .abou_us .abou_usI .userI{
+            height: 100%;
+            width: 40%;
+           
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            line-height: 30px;
+        }
+
+       .container .abou_us .abou_usI .userI p{
+        color: #183619;
+       }
+
+        
+        .container .content{
+height: 140px;
+width: 100%;
+
+display: flex;
+justify-content: center;
+align-items: center;
+gap: 10px;
+        }
+        .container .content a{
+            text-decoration: none;
+            color: #00B729;
+            font-size: 20px;
+        }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    
+    <div class="header">
+        <div class="logo">
+            <img src="LOGO-01.png" alt="">
+        </div>
+        <div class="info">
+            <button><a href="#abou_us">about_us</a></button>
+            <button><a href="#contect_us">contect_us</a></button>
+        </div>
+    </div>    
+    
+    
+    <div class="body">
+<!-- Box 1 -->
+      <div class="box">
+        <div class="img">
+          <img src="image/xayaat/1.jpg" alt="">
+          <img src="image/xayaat/2.jpg" alt="">
+          <img src="image/xayaat/3.jpg" alt="">
+          <img src="image/xayaat/4.jpg" alt="">
+        </div>
+        <div class="infoI"><p>xayaat marked</p></div>
+      </div>
+
+      <!-- Box 2 -->
+      <div class="box">
+        <div class="img">
+          <img src="image/macad/1.jpg" alt="">
+          <img src="image/macad/2.jpg" alt="">
+          <img src="image/macad/3.jpg" alt="">
+          <img src="image/macad/4.jpg" alt="">
+          <img src="image/macad/5.jpg" alt="">
+          <img src="image/macad/6.jpg" alt="">
+        </div>
+        <div class="infoI"><p>macad</p></div>
+      </div>
+
+
+      <div class="box">
+        <div class="img">
+          <img src="image/xayaat/1.jpg" alt="">
+          <img src="image/xayaat/2.jpg" alt="">
+          <img src="image/xayaat/3.jpg" alt="">
+          <img src="image/xayaat/4.jpg" alt="">
+        </div>
+        <div class="infoI"><p>xayaat marked</p></div>
+      </div>
+
+      <!-- Box 2 -->
+      <div class="box">
+        <div class="img">
+          <img src="image/macad/1.jpg" alt="">
+          <img src="image/macad/2.jpg" alt="">
+          <img src="image/macad/3.jpg" alt="">
+          <img src="image/macad/4.jpg" alt="">
+          <img src="image/macad/5.jpg" alt="">
+          <img src="image/macad/6.jpg" alt="">
+        </div>
+        <div class="infoI"><p>macad</p></div>
+      </div><div class="box">
+        <div class="img">
+          <img src="image/xayaat/1.jpg" alt="">
+          <img src="image/xayaat/2.jpg" alt="">
+          <img src="image/xayaat/3.jpg" alt="">
+          <img src="image/xayaat/4.jpg" alt="">
+        </div>
+        <div class="infoI"><p>xayaat marked</p></div>
+      </div>
+
+      <!-- Box 2 -->
+      <div class="box">
+        <div class="img">
+          <img src="image/macad/1.jpg" alt="">
+          <img src="image/macad/2.jpg" alt="">
+          <img src="image/macad/3.jpg" alt="">
+          <img src="image/macad/4.jpg" alt="">
+          <img src="image/macad/5.jpg" alt="">
+          <img src="image/macad/6.jpg" alt="">
+        </div>
+        <div class="infoI"><p>macad</p></div>
+      </div><div class="box">
+        <div class="img">
+          <img src="image/xayaat/1.jpg" alt="">
+          <img src="image/xayaat/2.jpg" alt="">
+          <img src="image/xayaat/3.jpg" alt="">
+          <img src="image/xayaat/4.jpg" alt="">
+        </div>
+        <div class="infoI"><p>xayaat marked</p></div>
+      </div>
+
+      <!-- Box 2 -->
+      <div class="box">
+        <div class="img">
+          <img src="image/macad/1.jpg" alt="">
+          <img src="image/macad/2.jpg" alt="">
+          <img src="image/macad/3.jpg" alt="">
+          <img src="image/macad/4.jpg" alt="">
+          <img src="image/macad/5.jpg" alt="">
+          <img src="image/macad/6.jpg" alt="">
+        </div>
+        <div class="infoI"><p>macad</p></div>
+      </div><div class="box">
+        <div class="img">
+          <img src="image/xayaat/1.jpg" alt="">
+          <img src="image/xayaat/2.jpg" alt="">
+          <img src="image/xayaat/3.jpg" alt="">
+          <img src="image/xayaat/4.jpg" alt="">
+        </div>
+        <div class="infoI"><p>xayaat marked</p></div>
+      </div>
+
+      <!-- Box 2 -->
+      <div class="box">
+        <div class="img">
+          <img src="image/macad/1.jpg" alt="">
+          <img src="image/macad/2.jpg" alt="">
+          <img src="image/macad/3.jpg" alt="">
+          <img src="image/macad/4.jpg" alt="">
+          <img src="image/macad/5.jpg" alt="">
+          <img src="image/macad/6.jpg" alt="">
+        </div>
+        <div class="infoI"><p>macad</p></div>
+      </div><div class="box">
+        <div class="img">
+          <img src="image/xayaat/1.jpg" alt="">
+          <img src="image/xayaat/2.jpg" alt="">
+          <img src="image/xayaat/3.jpg" alt="">
+          <img src="image/xayaat/4.jpg" alt="">
+        </div>
+        <div class="infoI"><p>xayaat marked</p></div>
+      </div>
+
+      <!-- Box 2 -->
+      <div class="box">
+        <div class="img">
+          <img src="image/macad/1.jpg" alt="">
+          <img src="image/macad/2.jpg" alt="">
+          <img src="image/macad/3.jpg" alt="">
+          <img src="image/macad/4.jpg" alt="">
+          <img src="image/macad/5.jpg" alt="">
+          <img src="image/macad/6.jpg" alt="">
+        </div>
+        <div class="infoI"><p>macad</p></div>
+      </div>
+
+      <div class="box">
+        <div class="img">
+          <img src="image/xayaat/1.jpg" alt="">
+          <img src="image/xayaat/2.jpg" alt="">
+          <img src="image/xayaat/3.jpg" alt="">
+          <img src="image/xayaat/4.jpg" alt="">
+        </div>
+        <div class="infoI"><p>xayaat marked</p></div>
+      </div>
+
+      <!-- Box 2 -->
+      <div class="box">
+        <div class="img">
+          <img src="image/macad/1.jpg" alt="">
+          <img src="image/macad/2.jpg" alt="">
+          <img src="image/macad/3.jpg" alt="">
+          <img src="image/macad/4.jpg" alt="">
+          <img src="image/macad/5.jpg" alt="">
+          <img src="image/macad/6.jpg" alt="">
+        </div>
+        <div class="infoI"><p>macad</p></div>
+      </div><div class="box">
+        <div class="img">
+          <img src="image/xayaat/1.jpg" alt="">
+          <img src="image/xayaat/2.jpg" alt="">
+          <img src="image/xayaat/3.jpg" alt="">
+          <img src="image/xayaat/4.jpg" alt="">
+        </div>
+        <div class="infoI"><p>xayaat marked</p></div>
+      </div>
+
+      <!-- Box 2 -->
+      <div class="box">
+        <div class="img">
+          <img src="image/macad/1.jpg" alt="">
+          <img src="image/macad/2.jpg" alt="">
+          <img src="image/macad/3.jpg" alt="">
+          <img src="image/macad/4.jpg" alt="">
+          <img src="image/macad/5.jpg" alt="">
+          <img src="image/macad/6.jpg" alt="">
+        </div>
+        <div class="infoI"><p>macad</p></div>
+      </div><div class="box">
+        <div class="img">
+          <img src="image/xayaat/1.jpg" alt="">
+          <img src="image/xayaat/2.jpg" alt="">
+          <img src="image/xayaat/3.jpg" alt="">
+          <img src="image/xayaat/4.jpg" alt="">
+        </div>
+        <div class="infoI"><p>xayaat marked</p></div>
+      </div>
+
+      <!-- Box 2 -->
+      <div class="box">
+        <div class="img">
+          <img src="image/macad/1.jpg" alt="">
+          <img src="image/macad/2.jpg" alt="">
+          <img src="image/macad/3.jpg" alt="">
+          <img src="image/macad/4.jpg" alt="">
+          <img src="image/macad/5.jpg" alt="">
+          <img src="image/macad/6.jpg" alt="">
+        </div>
+        <div class="infoI"><p>macad</p></div>
+      </div><div class="box">
+        <div class="img">
+          <img src="image/xayaat/1.jpg" alt="">
+          <img src="image/xayaat/2.jpg" alt="">
+          <img src="image/xayaat/3.jpg" alt="">
+          <img src="image/xayaat/4.jpg" alt="">
+        </div>
+        <div class="infoI"><p>xayaat marked</p></div>
+      </div>
+
+      <!-- Box 2 -->
+      <div class="box">
+        <div class="img">
+          <img src="image/macad/1.jpg" alt="">
+          <img src="image/macad/2.jpg" alt="">
+          <img src="image/macad/3.jpg" alt="">
+          <img src="image/macad/4.jpg" alt="">
+          <img src="image/macad/5.jpg" alt="">
+          <img src="image/macad/6.jpg" alt="">
+        </div>
+        <div class="infoI"><p>macad</p></div>
+      </div><div class="box">
+        <div class="img">
+          <img src="image/xayaat/1.jpg" alt="">
+          <img src="image/xayaat/2.jpg" alt="">
+          <img src="image/xayaat/3.jpg" alt="">
+          <img src="image/xayaat/4.jpg" alt="">
+        </div>
+        <div class="infoI"><p>xayaat marked</p></div>
+      </div>
+
+      <!-- Box 2 -->
+      <div class="box">
+        <div class="img">
+          <img src="image/macad/1.jpg" alt="">
+          <img src="image/macad/2.jpg" alt="">
+          <img src="image/macad/3.jpg" alt="">
+          <img src="image/macad/4.jpg" alt="">
+          <img src="image/macad/5.jpg" alt="">
+          <img src="image/macad/6.jpg" alt="">
+        </div>
+        <div class="infoI"><p>macad</p></div>
+      </div><div class="box">
+        <div class="img">
+          <img src="image/xayaat/1.jpg" alt="">
+          <img src="image/xayaat/2.jpg" alt="">
+          <img src="image/xayaat/3.jpg" alt="">
+          <img src="image/xayaat/4.jpg" alt="">
+        </div>
+        <div class="infoI"><p>xayaat marked</p></div>
+      </div>
+
+      <!-- Box 2 -->
+      <div class="box">
+        <div class="img">
+          <img src="image/macad/1.jpg" alt="">
+          <img src="image/macad/2.jpg" alt="">
+          <img src="image/macad/3.jpg" alt="">
+          <img src="image/macad/4.jpg" alt="">
+          <img src="image/macad/5.jpg" alt="">
+          <img src="image/macad/6.jpg" alt="">
+        </div>
+        <div class="infoI"><p>macad</p></div>
+      </div><div class="box">
+        <div class="img">
+          <img src="image/xayaat/1.jpg" alt="">
+          <img src="image/xayaat/2.jpg" alt="">
+          <img src="image/xayaat/3.jpg" alt="">
+          <img src="image/xayaat/4.jpg" alt="">
+        </div>
+        <div class="infoI"><p>xayaat marked</p></div>
+      </div>
+
+      <!-- Box 2 -->
+      <div class="box">
+        <div class="img">
+          <img src="image/macad/1.jpg" alt="">
+          <img src="image/macad/2.jpg" alt="">
+          <img src="image/macad/3.jpg" alt="">
+          <img src="image/macad/4.jpg" alt="">
+          <img src="image/macad/5.jpg" alt="">
+          <img src="image/macad/6.jpg" alt="">
+        </div>
+        <div class="infoI"><p>macad</p></div>
+      </div><div class="box">
+        <div class="img">
+          <img src="image/xayaat/1.jpg" alt="">
+          <img src="image/xayaat/2.jpg" alt="">
+          <img src="image/xayaat/3.jpg" alt="">
+          <img src="image/xayaat/4.jpg" alt="">
+        </div>
+        <div class="infoI"><p>xayaat marked</p></div>
+      </div>
+
+      <!-- Box 2 -->
+      <div class="box">
+        <div class="img">
+          <img src="image/macad/1.jpg" alt="">
+          <img src="image/macad/2.jpg" alt="">
+          <img src="image/macad/3.jpg" alt="">
+          <img src="image/macad/4.jpg" alt="">
+          <img src="image/macad/5.jpg" alt="">
+          <img src="image/macad/6.jpg" alt="">
+        </div>
+        <div class="infoI"><p>macad</p></div>
+      </div><div class="box">
+        <div class="img">
+          <img src="image/xayaat/1.jpg" alt="">
+          <img src="image/xayaat/2.jpg" alt="">
+          <img src="image/xayaat/3.jpg" alt="">
+          <img src="image/xayaat/4.jpg" alt="">
+        </div>
+        <div class="infoI"><p>xayaat marked</p></div>
+      </div>
+
+      <!-- Box 2 -->
+      <div class="box">
+        <div class="img">
+          <img src="image/macad/1.jpg" alt="">
+          <img src="image/macad/2.jpg" alt="">
+          <img src="image/macad/3.jpg" alt="">
+          <img src="image/macad/4.jpg" alt="">
+          <img src="image/macad/5.jpg" alt="">
+          <img src="image/macad/6.jpg" alt="">
+        </div>
+        <div class="infoI"><p>macad</p></div>
+      </div><div class="box">
+        <div class="img">
+          <img src="image/xayaat/1.jpg" alt="">
+          <img src="image/xayaat/2.jpg" alt="">
+          <img src="image/xayaat/3.jpg" alt="">
+          <img src="image/xayaat/4.jpg" alt="">
+        </div>
+        <div class="infoI"><p>xayaat marked</p></div>
+      </div>
+
+      <!-- Box 2 -->
+      <div class="box">
+        <div class="img">
+          <img src="image/macad/1.jpg" alt="">
+          <img src="image/macad/2.jpg" alt="">
+          <img src="image/macad/3.jpg" alt="">
+          <img src="image/macad/4.jpg" alt="">
+          <img src="image/macad/5.jpg" alt="">
+          <img src="image/macad/6.jpg" alt="">
+        </div>
+        <div class="infoI"><p>macad</p></div>
+      </div><div class="box">
+        <div class="img">
+          <img src="image/xayaat/1.jpg" alt="">
+          <img src="image/xayaat/2.jpg" alt="">
+          <img src="image/xayaat/3.jpg" alt="">
+          <img src="image/xayaat/4.jpg" alt="">
+        </div>
+        <div class="infoI"><p>xayaat marked</p></div>
+      </div>
+
+      <!-- Box 2 -->
+      <div class="box">
+        <div class="img">
+          <img src="image/macad/1.jpg" alt="">
+          <img src="image/macad/2.jpg" alt="">
+          <img src="image/macad/3.jpg" alt="">
+          <img src="image/macad/4.jpg" alt="">
+          <img src="image/macad/5.jpg" alt="">
+          <img src="image/macad/6.jpg" alt="">
+        </div>
+        <div class="infoI"><p>macad</p></div>
+      </div><div class="box">
+        <div class="img">
+          <img src="image/xayaat/1.jpg" alt="">
+          <img src="image/xayaat/2.jpg" alt="">
+          <img src="image/xayaat/3.jpg" alt="">
+          <img src="image/xayaat/4.jpg" alt="">
+        </div>
+        <div class="infoI"><p>xayaat marked</p></div>
+      </div>
+
+      <!-- Box 2 -->
+      <div class="box">
+        <div class="img">
+          <img src="image/macad/1.jpg" alt="">
+          <img src="image/macad/2.jpg" alt="">
+          <img src="image/macad/3.jpg" alt="">
+          <img src="image/macad/4.jpg" alt="">
+          <img src="image/macad/5.jpg" alt="">
+          <img src="image/macad/6.jpg" alt="">
+        </div>
+        <div class="infoI"><p>macad</p></div>
+      </div>
+
+
+    </div>
+    
+
+
+
+  <div class="abou_us" id="abou_us">
+    <div class="abou_usT"><p>about us</p><hr></div>
+    <div class="abou_usI">
+        <div class="userimg">
+            <img src="Capturey.PNG" alt="">
+        </div>
+        <div class="userI">
+            <p>Magacaygu waa Cabdiladhif, waxaan ahay milkiilaha website-kan. Waxaan leeyahay khibrad qoto dheer oo dhinaca Graphic Design-ka ah, waxaanan si gaar ah ugu takhasusay naqshadeyn qurux badan, casri ah, isla markaana la jaanqaadaysa baahida macaamiisha. Haddii aad u baahan tahay naqshado soo jiidasho leh oo ka tarjumaya sumcaddaada ama ganacsigaaga — waxaad joogtaa meesha saxda ah!</p>
+        </div>
+    </div>
+</div>
+<div class="content" id="contect_us">
+    <a href="#">whatsapp</a>
+    <a href="#">facebook</a>
+    <a href="https://www.tiktok.com/@abdilathifdesigner?lang=en">tiktok</a>
+</div>
+  </div>
+
+  <!-- POPUP -->
+  <div class="popup" id="popup">
+    <div class="popup-content">
+      <span class="close">&times;</span>
+      <div class="slider" id="slider">
+        <!-- Sawirrada ayaa lagu dari doonaa JavaScript -->
+      </div>
+      <div class="controls">
+        <button id="prev">Prev</button>
+        <button id="next">Next</button>
+      </div>
+    </div>
+  </div>
+  <script>
+    const popup = document.getElementById('popup');
+    const closeBtn = document.querySelector('.close');
+    const slider = document.getElementById('slider');
+    const nextBtn = document.getElementById('next');
+    const prevBtn = document.getElementById('prev');
+    let slides = [];
+    let currentSlide = 0;
+
+    // Markii box la click-gareeyo
+    document.querySelectorAll('.box').forEach(box => {
+      box.addEventListener('click', () => {
+        const imgs = box.querySelectorAll('.img img');
+        slider.innerHTML = ''; // nadiifi slider
+        slides = [];
+
+        imgs.forEach((img, index) => {
+          const newImg = document.createElement('img');
+          newImg.src = img.src;
+          newImg.classList.add('slide');
+          if (index === 0) newImg.classList.add('active');
+          slider.appendChild(newImg);
+          slides.push(newImg);
+        });
+
+        currentSlide = 0;
+        popup.style.display = 'flex';
+      });
+    });
+
+    // Xiritaanka popup-ka
+    closeBtn.addEventListener('click', () => {
+      popup.style.display = 'none';
+    });
+
+    // Slide forward
+    nextBtn.addEventListener('click', () => {
+      changeSlide(1);
+    });
+
+    // Slide backward
+    prevBtn.addEventListener('click', () => {
+      changeSlide(-1);
+    });
+
+    function changeSlide(direction) {
+      slides[currentSlide].classList.remove('active');
+      currentSlide = (currentSlide + direction + slides.length) % slides.length;
+      slides[currentSlide].classList.add('active');
+    }
+  </script>
+</body>
+</html>
